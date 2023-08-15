@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { EntityManager, Repository } from 'typeorm';
 import { AggregateService } from './aggregate.service';
-import StateChange from './state-change/state-change.entity';
+import StateChange from '../state-change/state-change.entity';
 import { ConfigModule } from '@nestjs/config';
 import * as fs from 'fs';
 import * as path from 'path';

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import StateChange from './state-change/state-change.entity';
+import StateChange from '../state-change/state-change.entity';
 import AggregateResponse from './aggregate.response';
 
 @Injectable()

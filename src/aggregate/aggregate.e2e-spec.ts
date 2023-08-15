@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import { AggregateModule } from './aggregate.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import StateChange from './state-change/state-change.entity';
+import StateChange from '../state-change/state-change.entity';
 import { AuthModule } from '../auth/auth.module';
 
 describe('ReaderController (e2e)', () => {

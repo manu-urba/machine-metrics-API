@@ -5,6 +5,7 @@ import * as Joi from 'joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import * as path from 'path';
+import { StateChangeModule } from './state-change/state-change.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import * as path from 'path';
     }),
     AggregateModule,
     AuthModule,
+    StateChangeModule,
   ],
 })
 export class AppModule {}
