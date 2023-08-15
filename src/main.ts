@@ -13,7 +13,7 @@ async function bootstrap(): Promise<void> {
   app.setGlobalPrefix(`v${majorVersion}`);
   const port = configService.get('PORT');
   const config = new DocumentBuilder()
-    .setTitle('Mavarick Machine Matrix API')
+    .setTitle('Mavarick Machine Metrics API')
     .setVersion(apiVersion)
     .build();
   const document = SwaggerModule.createDocument(app, config);
