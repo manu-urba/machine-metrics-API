@@ -25,6 +25,26 @@ export class StateChangeController {
     required: true,
   })
   @ApiQuery({
+    name: 'start_time_gt',
+    type: Date,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'start_time_gte',
+    type: Date,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'start_time_lt',
+    type: Date,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'start_time_lte',
+    type: Date,
+    required: false,
+  })
+  @ApiQuery({
     name: 'machine_name',
     type: String,
     required: false,
@@ -55,13 +75,25 @@ export class StateChangeController {
     @Query('page') page?: number,
     @Query('per_page') perPage?: number,
     @Query('machine_name') machineName?: string,
+    @Query('start_time_gt') startTimeGt?: Date,
+    @Query('start_time_gte') startTimeGte?: Date,
+    @Query('start_time_lt') startTimeLt?: Date,
+    @Query('start_time_lte') startTimeLte?: Date,
   ): Promise<PaginatedResponse<StateChangeResponse>> {
     return this.stateChangeService.findPaginated(
       {
         page: page ?? 1,
         perPage: perPage ?? (+process.env.PER_PAGE_MAXIMUM_ITEMS || 50),
       },
-      { machineName },
+      {
+        machineName,
+        startTime: {
+          gt: startTimeGt,
+          gte: startTimeGte,
+          lt: startTimeLt,
+          lte: startTimeLte,
+        },
+      },
     );
   }
 }
