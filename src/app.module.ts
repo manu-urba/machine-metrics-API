@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AggregateModule } from './aggregate/aggregate.module';
 import * as Joi from 'joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 import * as path from 'path';
 
 @Module({
@@ -17,6 +18,7 @@ import * as path from 'path';
         DATABASE_PASSWORD: Joi.string().required(),
         DATABASE_DBNAME: Joi.string().required(),
         API_VERSION: Joi.string().required(),
+        ALLOWED_API_KEYS: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({
@@ -35,6 +37,7 @@ import * as path from 'path';
       },
     }),
     AggregateModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

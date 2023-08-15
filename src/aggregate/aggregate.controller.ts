@@ -1,8 +1,15 @@
-import { Controller, Get, HttpStatus, Query } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Query, UseGuards } from '@nestjs/common';
 import { AggregateService } from './aggregate.service';
-import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiHeader,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+} from '@nestjs/swagger';
 import AggregateResponse from './aggregate.response';
+import { ApiKeyAuthGuard } from '../auth/guard/apikey-auth.guard';
 
+@UseGuards(ApiKeyAuthGuard)
 @Controller('api')
 export class AggregateController {
   constructor(private readonly aggregateService: AggregateService) {}
@@ -20,6 +27,10 @@ export class AggregateController {
     status: HttpStatus.OK,
     description: 'Aggregated information retrieved.',
     type: AggregateResponse,
+  })
+  @ApiHeader({
+    name: 'api-key',
+    required: true,
   })
   async getAggregate(
     @Query('machine') machineName: string,
