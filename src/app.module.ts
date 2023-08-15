@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { AggregateModule } from './aggregate/aggregate.module';
 import * as Joi from 'joi';
@@ -37,7 +35,5 @@ import * as path from 'path';
     }),
     AggregateModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
