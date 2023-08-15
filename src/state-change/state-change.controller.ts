@@ -1,5 +1,10 @@
 import { Controller, Get, HttpStatus, Query, UseGuards } from '@nestjs/common';
-import { ApiHeader, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiHeader,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { ApiKeyAuthGuard } from '../auth/guard/apikey-auth.guard';
 import { StateChangeService } from './state-change.service';
 import StateChangeResponse from './state-change.response';
@@ -10,6 +15,9 @@ export class StateChangeController {
   constructor(private readonly stateChangeService: StateChangeService) {}
 
   @Get('/')
+  @ApiOperation({
+    summary: 'Get state change data.',
+  })
   @ApiHeader({
     name: 'api-key',
     required: true,
