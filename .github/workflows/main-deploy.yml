@@ -45,6 +45,15 @@ jobs:
     runs-on: ubuntu-latest
     environment: deploy
     steps:
+      - name: Docker login
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ vars.VPS_IP }}
+          USERNAME: ${{ vars.SSH_USER }}
+          PORT: ${{ vars.SSH_PORT }}
+          PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            sudo docker login ghcr.io --username manu-urba --password ${{ secrets.GH_TOKEN }}
       - name: Pull Docker Image
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -53,7 +62,7 @@ jobs:
           PORT: ${{ vars.SSH_PORT }}
           PASSWORD: ${{ secrets.SSH_PASSWORD }}
           script: |
-            sudo docker pull ghcr.io/${{ github.repository }}:dev
+            sudo docker pull ghcr.io/${{ github.repository }}:main
       - name: Start or update conatainer
         uses: appleboy/ssh-action@master
         with:
