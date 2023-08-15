@@ -56,6 +56,10 @@ describe('AggregateService', () => {
     await entityManager.query(sqlFileContents);
   });
 
+  it('should be defined', () => {
+    expect(aggregateService).toBeDefined();
+  });
+
   it('should load sql dummy data file correctly', async () => {
     const stateChangeCount = await aggregateRepository.count();
     expect(stateChangeCount).toBe(348);
