@@ -1,0 +1,67 @@
+name: Deploy (main)
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: manu-urba
+          password: ${{ secrets.GH_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+  pull-image:
+    needs: build-and-push-image
+    runs-on: ubuntu-latest
+    environment: deploy
+    steps:
+      - name: Pull Docker Image
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ vars.VPS_IP }}
+          USERNAME: ${{ vars.SSH_USER }}
+          PORT: ${{ vars.SSH_PORT }}
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo docker pull ghcr.io/${{ github.repository }}:dev
+      - name: Start or update conatainer
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ vars.VPS_IP }}
+          USERNAME: ${{ vars.SSH_USER }}
+          PORT: ${{ vars.SSH_PORT }}
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/manuel/mav-challenge
+            sudo docker-compose down --remove-orphans
+            sudo docker-compose --env-file .env.production up -d
