@@ -3,11 +3,11 @@ import { AggregateService } from './aggregate.service';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import AggregateResponse from './aggregate.response';
 
-@Controller('api/aggregate')
+@Controller('api')
 export class AggregateController {
   constructor(private readonly aggregateService: AggregateService) {}
 
-  @Get()
+  @Get('aggregate')
   @ApiOperation({
     summary: 'Get aggregated information for a specific machine.',
   })
