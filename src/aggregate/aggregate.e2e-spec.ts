@@ -7,7 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import StateChange from '../state-change/state-change.entity';
 import { AuthModule } from '../auth/auth.module';
 
-describe('ReaderController (e2e)', () => {
+describe('AggregateController (e2e)', () => {
   let app: INestApplication;
   let configService: ConfigService;
 
