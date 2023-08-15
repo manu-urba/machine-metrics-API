@@ -47,8 +47,8 @@ export class StateChangeController {
     description: 'Unauthorized',
   })
   async getStateChanges(
-    @Query('page') page: number,
-    @Query('per_page') perPage: number,
+    @Query('page') page?: number,
+    @Query('per_page') perPage?: number,
   ): Promise<PaginatedResponse<StateChangeResponse>> {
     return this.stateChangeService.findPaginated({
       page: page ?? 1,
