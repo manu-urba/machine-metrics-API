@@ -21,7 +21,9 @@ export class AggregateController {
     description: 'Aggregated information retrieved.',
     type: AggregateResponse,
   })
-  async getAggregate(@Query('machine') machineName: string) {
+  async getAggregate(
+    @Query('machine') machineName: string,
+  ): Promise<AggregateResponse> {
     return this.aggregateService.getUtilizationPercentage(machineName);
   }
 }
