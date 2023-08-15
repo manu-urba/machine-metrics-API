@@ -16,6 +16,7 @@ import * as path from 'path';
         DATABASE_USERNAME: Joi.string().required(),
         DATABASE_PASSWORD: Joi.string().required(),
         DATABASE_DBNAME: Joi.string().required(),
+        API_VERSION: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({
