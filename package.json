@@ -18,7 +18,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "db": "cd .dev/docker/mssql && docker stop $(docker ps -aq) && docker-compose up -d --build",
+    "db-down": "cd .dev/docker/mssql && docker stop $(docker ps -aq)"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
