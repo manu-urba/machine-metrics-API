@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
+import { AggregateModule } from './aggregate/aggregate.module';
 import * as Joi from 'joi';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import * as path from 'path';
 
 @Module({
   imports: [
@@ -17,6 +20,22 @@ import * as Joi from 'joi';
         DATABASE_DBNAME: Joi.string().required(),
       }),
     }),
+    TypeOrmModule.forRoot({
+      type: 'mssql',
+      host: process.env.DATABASE_HOST,
+      port: +process.env.DATABASE_PORT,
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_DBNAME,
+      entities: [path.join(__dirname, '**', '*.entity.{ts,js}')],
+      synchronize: false,
+      extra: {
+        trustServerCertificate: true,
+        Encrypt: true,
+        IntegratedSecurity: false,
+      },
+    }),
+    AggregateModule,
   ],
   controllers: [AppController],
   providers: [AppService],
