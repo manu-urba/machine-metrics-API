@@ -28,6 +28,10 @@ export class AggregateController {
     description: 'Aggregated information retrieved.',
     type: AggregateResponse,
   })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized',
+  })
   @ApiHeader({
     name: 'api-key',
     required: true,
