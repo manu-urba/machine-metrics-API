@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import StateChange from './state-change.entity';
 import { Repository } from 'typeorm';
 import StateChangeResponse from './state-change.response';
+import PaginatedResponse from '../pagination/paginated.response';
 
 @Injectable()
 export class StateChangeService {
@@ -14,7 +15,7 @@ export class StateChangeService {
   async findPaginated(pagination: {
     page: number;
     perPage: number;
-  }): Promise<StateChangeResponse[]> {
+  }): Promise<PaginatedResponse<StateChangeResponse>> {
     const take = pagination.perPage;
     const skip = (pagination.page - 1) * pagination.perPage;
     const result = await this.stateChangeRepository

@@ -8,6 +8,8 @@ import {
 import { ApiKeyAuthGuard } from '../auth/guard/apikey-auth.guard';
 import { StateChangeService } from './state-change.service';
 import StateChangeResponse from './state-change.response';
+import PaginatedResponse from '../pagination/paginated.response';
+import StateChangePaginatedResponse from './state-change-paginated.response';
 
 @UseGuards(ApiKeyAuthGuard)
 @Controller('api/state-change')
@@ -37,7 +39,7 @@ export class StateChangeController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'State changes information retrieved.',
-    type: StateChangeResponse,
+    type: StateChangePaginatedResponse,
     isArray: true,
   })
   @ApiResponse({
@@ -47,7 +49,7 @@ export class StateChangeController {
   async getStateChanges(
     @Query('page') page: number,
     @Query('per_page') perPage: number,
-  ): Promise<StateChangeResponse[]> {
+  ): Promise<PaginatedResponse<StateChangeResponse>> {
     return this.stateChangeService.findPaginated({
       page: page ?? 1,
       perPage: perPage ?? (+process.env.PER_PAGE_MAXIMUM_ITEMS || 50),
