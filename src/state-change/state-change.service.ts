@@ -32,6 +32,12 @@ export class StateChangeService {
         lt?: Date;
         lte?: Date;
       };
+      endTime?: {
+        gt?: Date;
+        gte?: Date;
+        lt?: Date;
+        lte?: Date;
+      };
     },
   ): Promise<PaginatedResponse<StateChangeResponse>> {
     const where: FindOptionsWhere<StateChange> = {};
@@ -44,13 +50,21 @@ export class StateChangeService {
       where.start_time = LessThan(filters.startTime.lt);
     if (filters.startTime?.lte)
       where.start_time = LessThanOrEqual(filters.startTime.lte);
+    if (filters.endTime?.gt) where.end_time = MoreThan(filters.endTime.gt);
+    if (filters.endTime?.gte)
+      where.end_time = MoreThanOrEqual(filters.endTime.gte);
+    if (filters.endTime?.lt) where.end_time = LessThan(filters.endTime.lt);
+    if (filters.endTime?.lte)
+      where.end_time = LessThanOrEqual(filters.endTime.lte);
     const take = +pagination.perPage;
     const skip = (pagination.page - 1) * pagination.perPage;
     const result = await this.stateChangeRepository
       .createQueryBuilder()
       .where(where);
-    const totalCount = await result.getCount();
-    const data = await result.take(take).skip(skip).execute();
+    const [data, totalCount] = await result
+      .take(take)
+      .skip(skip)
+      .getManyAndCount();
     return {
       data,
       totalCount,

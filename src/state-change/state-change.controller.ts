@@ -45,6 +45,26 @@ export class StateChangeController {
     required: false,
   })
   @ApiQuery({
+    name: 'end_time_gt',
+    type: Date,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'end_time_gte',
+    type: Date,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'end_time_lt',
+    type: Date,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'end_time_lte',
+    type: Date,
+    required: false,
+  })
+  @ApiQuery({
     name: 'machine_name',
     type: String,
     required: false,
@@ -79,6 +99,10 @@ export class StateChangeController {
     @Query('start_time_gte') startTimeGte?: Date,
     @Query('start_time_lt') startTimeLt?: Date,
     @Query('start_time_lte') startTimeLte?: Date,
+    @Query('end_time_gt') endTimeGt?: Date,
+    @Query('end_time_gte') endTimeGte?: Date,
+    @Query('end_time_lt') endTimeLt?: Date,
+    @Query('end_time_lte') endTimeLte?: Date,
   ): Promise<PaginatedResponse<StateChangeResponse>> {
     return this.stateChangeService.findPaginated(
       {
@@ -92,6 +116,12 @@ export class StateChangeController {
           gte: startTimeGte,
           lt: startTimeLt,
           lte: startTimeLte,
+        },
+        endTime: {
+          gt: endTimeGt,
+          gte: endTimeGte,
+          lt: endTimeLt,
+          lte: endTimeLte,
         },
       },
     );
