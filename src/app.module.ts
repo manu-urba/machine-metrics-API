@@ -20,6 +20,7 @@ import { StateChangeModule } from './state-change/state-change.module';
         DATABASE_DBNAME: Joi.string().required(),
         API_VERSION: Joi.string().required(),
         ALLOWED_API_KEYS: Joi.string().required(),
+        PER_PAGE_MAXIMUM_ITEMS: Joi.number().default(50),
       }),
     }),
     TypeOrmModule.forRoot({
