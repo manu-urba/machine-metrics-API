@@ -25,6 +25,11 @@ export class StateChangeController {
     required: true,
   })
   @ApiQuery({
+    name: 'machine_name',
+    type: String,
+    required: false,
+  })
+  @ApiQuery({
     name: 'per_page',
     description: 'Number of items per page [MIN: 1 | MAX: 50].',
     type: Number,
@@ -49,10 +54,14 @@ export class StateChangeController {
   async getStateChanges(
     @Query('page') page?: number,
     @Query('per_page') perPage?: number,
+    @Query('machine_name') machineName?: string,
   ): Promise<PaginatedResponse<StateChangeResponse>> {
-    return this.stateChangeService.findPaginated({
-      page: page ?? 1,
-      perPage: perPage ?? (+process.env.PER_PAGE_MAXIMUM_ITEMS || 50),
-    });
+    return this.stateChangeService.findPaginated(
+      {
+        page: page ?? 1,
+        perPage: perPage ?? (+process.env.PER_PAGE_MAXIMUM_ITEMS || 50),
+      },
+      { machineName },
+    );
   }
 }

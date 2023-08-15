@@ -4,6 +4,7 @@ import StateChange from './state-change.entity';
 import { Repository } from 'typeorm';
 import StateChangeResponse from './state-change.response';
 import PaginatedResponse from '../pagination/paginated.response';
+import { FindOptionsWhere } from 'typeorm/find-options/FindOptionsWhere';
 
 @Injectable()
 export class StateChangeService {
@@ -12,15 +13,22 @@ export class StateChangeService {
     private stateChangeRepository: Repository<StateChange>,
   ) {}
 
-  async findPaginated(pagination: {
-    page: number;
-    perPage: number;
-  }): Promise<PaginatedResponse<StateChangeResponse>> {
+  async findPaginated(
+    pagination: {
+      page: number;
+      perPage: number;
+    },
+    filters: {
+      machineName?: string;
+    },
+  ): Promise<PaginatedResponse<StateChangeResponse>> {
+    const where: FindOptionsWhere<StateChange> = {};
+    if (filters.machineName) where.machine_name = filters.machineName;
     const take = pagination.perPage;
     const skip = (pagination.page - 1) * pagination.perPage;
     const result = await this.stateChangeRepository
       .createQueryBuilder()
-      .where({})
+      .where(where)
       .take(take)
       .skip(skip);
     return result.execute();
