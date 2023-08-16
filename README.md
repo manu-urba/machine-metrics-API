@@ -1,38 +1,38 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
 ## Installation
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+## ⚡ Running the app
+
+### 💻 Setting up local environment
+
+```dotenv
+# .env.local
+DATABASE_HOST=
+DATABASE_PORT=
+DATABASE_USERNAME=
+DATABASE_PASSWORD=
+DATABASE_DBNAME=
+API_VERSION=1.0.0
+ALLOWED_API_KEYS=key1,key2,key3
+PER_PAGE_MAXIMUM_ITEMS=50
+
+```
+
+### 🐳 Starting local test database
+⚠️ **Warning**: **the mssql server image is designed to run on x86_64 (Intel) architecture, MacOS or Linux users have to enable Rosetta for x86/amd emulation:**
+1. Once Docker Desktop is running, open the Dashboard and go into Settings
+2. Find the “Features in development” option, and select the “Use Rosetta for x86/amd64 emulation on Apple Silicon” checkbox
+
+This repo comes with a mssql server 2022 docker container, if you want to use a local database. Skip this step if you use an AWS RDS database. Execute this script to start it.
+
+```bash
+$ npm run db
+```
+
+### 🚀 Running the API
 
 ```bash
 # development
@@ -45,8 +45,22 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## 🧪 Test
 
+### 💻 Setting up local test environment
+
+```dotenv
+# .env.local.test
+DATABASE_HOST=localhost
+DATABASE_PORT=1433
+DATABASE_USERNAME=sa
+DATABASE_PASSWORD=DummyPassw0rdForTesting!!
+DATABASE_DBNAME=master
+ALLOWED_API_KEYS=mav_ODqOy0KcWW2oLX_ramNUwPjpwG2DU1G8,mav_kcUN0m3pJFTx5hw2EhlOO10ye4w7_NhB
+PER_PAGE_MAXIMUM_ITEMS=50
+```
+
+### 🧬 Running tests
 ```bash
 # unit tests
 $ npm run test
@@ -57,17 +71,3 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
