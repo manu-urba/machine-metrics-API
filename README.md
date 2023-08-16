@@ -71,3 +71,11 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## 📝 Commit Emoji Convention
+This project follows the Gitmoji commit convention. Each commit message is prefixed with an emoji that represents the nature of the change. For example:
+
+🐛 :bug: for bug fixes\
+✅ :white_check_mark: for tests\
+✨ :sparkles: for new features\
+For a complete list of available emojis and their meanings, refer to the [Gitmoji](https://gitmoji.dev/) website.
