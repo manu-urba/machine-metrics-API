@@ -1,4 +1,4 @@
-## Installation
+## 🎉 Installation
 
 ```bash
 $ npm install
@@ -40,6 +40,10 @@ $ npm run start:prod
 ⚠️ **Warning**: **the mssql server image is designed to run on x86_64 (Intel) architecture, MacOS or Linux users have to enable Rosetta for x86/amd emulation:**
 1. Once Docker Desktop is running, open the Dashboard and go into Settings
 2. Find the “Features in development” option, and select the “Use Rosetta for x86/amd64 emulation on Apple Silicon” checkbox
+
+
+
+   https://github.com/microsoft/mssql-docker/issues/668
 
 This repo comes with a mssql server 2022 docker container, if you want to use a local database. Skip this step if you use an AWS RDS database. Execute this script to start it.
 
