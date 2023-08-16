@@ -1,0 +1,14 @@
+@startuml
+!define StateChange class
+
+ENTITY StateChange {
+  PK state_change_id : int (auto increment)
+  --
+  machine_name : nvarchar(50)
+  start_time : datetime
+  end_time : datetime
+  status : nvarchar(50)
+  reason_code : nvarchar(50)
+  duration : int
+}
+@enduml
