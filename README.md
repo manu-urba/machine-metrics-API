@@ -77,5 +77,6 @@ This project follows the Gitmoji commit convention. Each commit message is prefi
 
 🐛 :bug: for bug fixes\
 ✅ :white_check_mark: for tests\
-✨ :sparkles: for new features\
+✨ :sparkles: for new features
+
 For a complete list of available emojis and their meanings, refer to the [Gitmoji](https://gitmoji.dev/) website.
