@@ -73,7 +73,17 @@ export class AggregateService {
       .skip(skip)
       .take(take);
     const data = await queryBuilder.getRawMany();
-    const totalCount = await queryBuilder.getCount();
+    const totalCountQuery = this.stateChangeRepository
+      .createQueryBuilder('state_change')
+      .select('COUNT(DISTINCT state_change.machine_name)', 'totalCount')
+      .where('state_change.start_time >= :utilizationFrom', {
+        utilizationFrom: utilizationFilter.utilizationFrom ?? new Date(0),
+      })
+      .andWhere('state_change.end_time <= :utilizationTo', {
+        utilizationTo: utilizationFilter.utilizationTo ?? new Date(2100, 1),
+      });
+
+    const [{ totalCount }] = await totalCountQuery.getRawMany();
     return {
       data: data.map((d) => {
         return {
