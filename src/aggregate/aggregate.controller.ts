@@ -80,7 +80,7 @@ export class AggregateController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Aggregated information retrieved.',
-    type: AggregateResponse,
+    type: AggregatePaginatedResponse,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
