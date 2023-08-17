@@ -58,6 +58,7 @@ export class AggregateService {
         `(SUM(CASE WHEN state_change.status = 'operational' THEN state_change.duration ELSE 0 END) / 3600.0) / 
        (SUM(CASE WHEN state_change.status = 'operational' THEN state_change.duration ELSE 0 END) / 3600.0 + 
         SUM(CASE WHEN state_change.status = 'non_operational' THEN state_change.duration ELSE 0 END) / 3600.0) AS formula_result`,
+        'COUNT(DISTINCT state_change.machine_name) as totalCount',
       ])
       .where('state_change.start_time >= :utilizationFrom', {
         utilizationFrom: utilizationFilter.utilizationFrom ?? new Date(0),
@@ -73,17 +74,7 @@ export class AggregateService {
       .skip(skip)
       .take(take);
     const data = await queryBuilder.getRawMany();
-    const totalCountQuery = this.stateChangeRepository
-      .createQueryBuilder('state_change')
-      .select('COUNT(DISTINCT state_change.machine_name)', 'totalCount')
-      .where('state_change.start_time >= :utilizationFrom', {
-        utilizationFrom: utilizationFilter.utilizationFrom ?? new Date(0),
-      })
-      .andWhere('state_change.end_time <= :utilizationTo', {
-        utilizationTo: utilizationFilter.utilizationTo ?? new Date(2100, 1),
-      });
-
-    const [{ totalCount }] = await totalCountQuery.getRawMany();
+    const totalCount = data[0]?.totalCount ?? 0;
     return {
       data: data.map((d) => {
         return {
@@ -91,7 +82,7 @@ export class AggregateService {
           utilization: d.formula_result * 100,
         };
       }),
-      totalCount: totalCount,
+      totalCount,
       hasNext: skip + take < totalCount,
       hasPrevious: skip > 0,
     };
